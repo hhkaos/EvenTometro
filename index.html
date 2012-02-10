@@ -23,20 +23,110 @@
 </head>
 
 <body class="app">
-    <!--
-        First, you have to do is create a LungoJS Application instance in the file app.js.
-        ...and use a Webkit browser as Chrome or Safari.
-    -->
-    <section id="hello_world">
-        <header data-title="Hello world!">
-            <a href="#" data-target="aside" data-icon="files" class="button"></a>
+    
+    <section id="home">
+        <header data-title="Calendario de eventos">
+            <a href="#" data-target="aside" data-icon="items" class="button"></a>
+            <a href="#login" data-target="section" data-icon="key" class="button onright rounded"></a>
         </header>
 
-        <footer></footer>
+        <footer class="toolbar">
+            <nav>
+                <a href="#calendar-list" data-target="article" data-icon="calendar" data-title="Calendario de eventos" data-count="3"></a> 
+                <a href="#city-list" data-target="article" data-icon="pushpin" data-title="Eventos por ciudades"></a> 
+                <a href="#organizers-list" data-target="article" data-icon="group" data-title="Organizadores de eventos" ></a>
+            </nav>
+        </footer>
 
-        <aside></aside>
+        <aside>
+            <a href="#calendar-list" data-target="article" data-icon="calendar" data-title="Calendario de eventos" data-count="3">Calendario</a>
+            <a href="#city-list" data-target="article" data-icon="pushpin" data-title="Eventos por ciudades">Ciudades</a> 
+            <a href="#organizers-list" data-target="article" data-icon="group" data-title="Organizadores de eventos">Organizadores</a>
+            <a href="#login" data-target="section" data-icon="key" >Identifícate</a>
+            <a href="#eventometro" data-target="article" data-icon="info" >Eventómetro</a>
+        </aside>
 
-        <article></article>
+        <article id="calendar-list" class="list">
+            <ul>
+                <li class="tip dark">Esta semana:</li>
+                <li>
+                    <div class="onright bubble red" data-icon="clock">17 Febrero</div>
+                    Nuevos Retos Web y Móvil
+                    <small>PideCurso - Granada</small>
+                </li>
+                <li class="tip dark">Próximos eventos:</li>
+                <li>
+                    <div class="onright bubble blue" data-icon="clock">22 Febrero</div>
+                    Claves para emprender con Joaquín Cuenca
+                    <small>Iniciador Sevilla - Sevilla</small>
+                </li>
+                <li>
+                    <div class="onright bubble blue" data-icon="clock">32 Febrero</div>
+                    Encuentro de Betabeers
+                    <small>Betabeers Valencia - Valencia</small>
+                </li>
+            </ul>
+        </article>
+        <article id="city-list" class="list">
+            <ul>
+                <li>Granada</li>
+                <li>Madrid</li>
+            </ul>
+        </article>
+        
+        <article id="organizers-list" class="list">
+            <ul>
+                <li>
+                    AWGR
+                    <small>Asociación de Webmasters de Granada</small>
+                </li>
+                <li>
+                    Betabeers
+                    <small>Programadores</small>
+                </li>
+                <li>
+                    Iniciador
+                    <small>Evento de emprendedores para emprendedores</small>
+                </li>
+                <li>
+                    OSL Granada
+                    <small>Oficina de Software Libre de Granada</small>
+                </li>
+            </ul>
+        </article>
+        
+        <article id="eventometro" class="list">
+            <div class="indented rounded">
+                <ul>
+                    <li class="anchor">En el desarrollo de EvenTómetro han participado:</li>
+                    <li data-image="assets/pictures/hhkaos.jpg">
+                        Raúl Jiménez Ortega
+                        <small>@hhkaos - Frontend Developer</small>
+                    </li>
+                    <li class="tip dark">Más información:</li>
+                    <li><strong>Web:</strong> <a href="http://www.github.com/hhkaos/Eventometro">http://www.github.com/hhkaos/Eventometro</a></li>
+                    <li><strong>Versión</strong> 0.1</li>
+                    <li><strong>Última actualización:</strong> 10 Febrero 2012</li>
+                </ul>
+            </div>
+        </article>
+    </section>
+    
+    <section id="organizers">
+        <header data-title="Organizadores">
+            <a href="#" data-target="aside" data-icon="files" class="button"></a>
+            <a href="#" data-target="aside" data-icon="user" class="button onright rounded"></a>
+        </header>
+    </section>
+    
+    <section id="login">
+        <header data-title="Formulario de autentificación">
+            <a href="#" data-target="aside" data-icon="files" class="button"></a>
+            <a href="#back" data-target="section" data-icon="left" class="button onright rounded"></a>
+        </header>
+        <article>
+            <p>Aquí iría el formulario de autentificación</p>
+        </article>
     </section>
 
     <!-- LungoJS (Production mode) -->
