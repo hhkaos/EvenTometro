@@ -1,13 +1,62 @@
 <html>
 <head>
-    <script type="text/javascript">
-        function helloworld(){
-            alert("Hello world");
-        }
+    <link rel="stylesheet" href="styles/lungojs/lungo-1.1.2.min.css">
+    <link rel="stylesheet" href="styles/lungojs/lungo.theme.default.css">
     
+    <!-- LungoJS (Production mode) -->
+    <script type="text/javascript" src="scripts/lungojs/lungo-1.1.2.js"></script>
+    <!--
+        <script type="text/javascript" src="scripts/lungojs/lungo-1.1.2.packed.js"></script>
+    -->
+    
+    <script type="text/javascript">
+    var App = (function(lng, undefined) {
+
+        lng.App.init({
+            id: 'main',
+            name: 'Lungo Demo',
+            version: '1.1'
+        });
+
+    })(LUNGO);
     </script>
+    
+    
 </head>
-<body onload="javascript:helloworld()">
-Yeip!
+<body>
+
+    <section id="main">
+        <header data-back="home blue" data-icon="wifi" data-title="Title of section"></header>
+
+        <footer class="toolbar">
+            
+                <a href="#first_article" data-target="article" data-icon="home">Home</a>
+                <a href="#second_article" data-target="section" data-icon="user">User</a>
+            
+        </footer>
+        
+        <aside id="a" class="b">
+            <nav>
+                <a href="#first_article" data-target="article" data-icon="home">Home</a>
+                <a href="#second_article" data-target="section" data-icon="user">User</a>
+            </nav>
+        </aside>
+        
+        <article id="first_article">
+                <ul id="list-ordered_list">
+                    <li>
+                        Elem1   
+                    </li>
+                    <li>
+                        Elem2
+                    </li>
+                </ul>
+        </article>
+        
+    </section>
+    
+    <section id="second_article">
+        <!-- content -->
+    </section>
 </body>
 </html>
