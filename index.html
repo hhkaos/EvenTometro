@@ -1,1 +1,174 @@
-/home/hhkaos/workspace/EvenTometroAndroid/assets/www/index.html
+<!DOCTYPE html> 
+<html> 
+	<head> 
+    <meta charset="utf-8">
+	<title>Calendario de eventos</title> 
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="stylesheet" href="assets/styles/jquery.mobile-1.0.1.min.css" />
+	<script src="assets/scripts/jquery-1.6.4.min.js"></script>
+    <script src="assets/scripts/jquery.icalendar.min.js"></script>
+    <script src="assets/scripts/jquery.tmpl.min.js"></script>
+	<script src="assets/scripts/jquery.mobile-1.0.1.min.js"></script>
+    <script type="text/javascript">
+        
+        
+        var mes = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        function showEvent(obj){  
+                $("#event-page #event-start").text($(obj).attr("data-start"));
+                $("#event-page #event-end").text($(obj).attr("data-end"));
+                $("#event-page #event-location").text($(obj).attr("data-location"));
+                $("#event-page #event-description").text($(obj).attr("data-description"));
+                $("#event-page h1").text($(obj).attr("data-name"));
+                $.mobile.changePage($("#event-page"));
+            }
+        
+        $(document).ready(function(){
+            $("#calendarios a").click(function(){  
+                $("#calendario h1").text($(this).attr("data-name"));
+                
+                $.mobile.showPageLoadingMsg();	
+                
+                $.ajax({
+                    url: $(this).attr("data-ics"),
+                    context: document.body,
+                    timeout: 20000,
+                    crossDomain:true,
+                    complete: function(response,textStatus){
+                        asd=response;
+                        
+                        if(textStatus!="error"){
+                            var ical = $.icalendar.parse(response.responseText); 
+                            var obj=JSON.parse(JSON.stringify(ical,null,2)); 
+                            $("#eventos").empty()
+                            
+                            eventos = $(obj.vevent);
+                            $(eventos).each(function(i,elem){
+                                //console.log(elem.dtstart);
+                                var start = new Date(elem.dtstart);
+                                elem.dtstart= start.getDate()+" de "+ mes[start.getMonth()];
+                                var button = $.tmpl($("#event-template"), elem).appendTo("#eventos");
+                                
+                                if(i==7)
+                                    return false;
+                            });
+                            $.mobile.changePage($("#calendario"));
+                        }
+                        
+                        $.mobile.hidePageLoadingMsg();	
+                    }
+                });
+            }) 
+        });
+    </script>
+</head> 
+<body> 
+
+<div data-role="page" id="calendarios">
+
+	<div data-role="header">
+		<h1>Calendario de eventos</h1>
+	</div><!-- /header -->
+
+	<div data-role="listview">	
+        <li>
+            <a  href="#" 
+                data-name="Eventosfera"
+                data-ics="calendars/basic.ics"
+                >
+<!--
+                data-ics="https://www.google.com/calendar/ical/n11v1f0jdq6heivpqsejfj1o64%40group.calendar.google.com/public/basic.ics"
+-->
+                
+                <h2>Eventosfera</h2>
+                <p class="ui-li-desc">Todos los eventos 2.0 que se celebran en España</p>
+            </a>
+        </li>
+        <li>
+            <a  href="#"
+                data-name="Asoc. de Webmasters de Granada"
+                data-ics="AWGR"
+                >
+                <h2>AWGR</h2>
+                <p class="ui-li-desc">Asociación de Webmasters de Granada</p>
+            </a>
+        </li>
+	</div><!-- /content -->
+
+    <div data-role="footer" data-position="fixed">
+        <div data-role="navbar" data-iconpos="right">
+            <ul>
+                <li><a href="#calendarios" data-role="button" data-icon="home" >Calendarios</a></li>
+                <li><a href="#about-us" data-icon="info">Sobre nosotros</a></li>
+            </ul>
+        </div><!-- /navbar -->
+    </div><!-- /footer -->
+</div><!-- /page -->
+
+<div data-role="page" id="calendario">
+    <div data-role="header" >
+    	<a  data-rel="back" class="ui-btn-left" data-icon="home">Home</a>
+
+		<h1>Ciudades</h1>
+	</div><!-- /header -->
+    
+    
+    <div data-role="listview" id="eventos">	
+        <li>
+        Evento 1
+        </li>
+        
+    </div>
+    <div data-role="footer" data-position="fixed">
+        <div data-role="navbar" data-iconpos="right">
+            <ul>
+                <li><a href="#calendarios" data-role="button" data-icon="home" data-iconpos="top">Calendarios</a></li>
+                <li><a href="#about-us" data-icon="info">Sobre nosotros</a></li>
+            </ul>
+        </div><!-- /navbar -->
+    </div><!-- /footer -->
+</div>
+
+<div data-role="page" id="event-page">
+    <div data-role="header" >
+    	<a  data-rel="back" class="ui-btn-left" data-icon="home">Eventos</a>
+
+		<h1></h1>
+    </div>
+    
+    <div data-role="content" >
+        <ul>
+            <li>Fecha Inicio: <span id="event-start"></span></p>
+            <li>Fecha Fin: <span id="event-end"></span></p>
+            <li>Descripción: <span id="event-description"></span></li>
+            <li>Localización: <span id="event-location"></span></p>
+        </ul>
+    </div>    
+	
+</div>
+
+<div data-role="page" id="about-us">
+    <div data-role="header" >
+    	<a  data-rel="back" class="ui-btn-left" data-icon="home">Home</a>
+
+		<h1>Sobre nosotros</h1>
+	</div><!-- /header -->
+</div>
+
+<div id="event-template" type="text/x-jquery-tmpl" style="display:none">
+    <li class="ui-li ui-li-static ui-body-c">
+        <a  href="#"
+            data-start="${dtstart}"
+            data-end="${dtend}"
+            data-description="${description}"
+            data-location="${location}"
+            data-name="${summary}"
+            onclick="javascript:showEvent(this)"
+            >
+            <h3>${summary}</h3>
+            <p class="ui-li-desc"><strong>${dtstart}</strong> en ${location}</p>
+        </a>
+    </li>
+</div>
+
+</body>
+</html>
